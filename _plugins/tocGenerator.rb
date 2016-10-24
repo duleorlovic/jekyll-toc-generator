@@ -1,4 +1,5 @@
 require 'nokogiri'
+require 'byebug'
 
 module Jekyll
 
@@ -56,11 +57,11 @@ module Jekyll
 
         sects.each do |sect|
           inner_section += 1
-          anchor_id = [
-                        anchor_prefix, toc_level, '-', toc_section, '-',
-                        inner_section
-                      ].map(&:to_s).join ''
-
+          # anchor_id = [
+          #               anchor_prefix, toc_level, '-', toc_section, '-',
+          #               inner_section
+          #             ].map(&:to_s).join ''
+          anchor_id = sect['id']
           sect['id'] = "#{anchor_id}"
 
           level_html += create_level_html(anchor_id,
@@ -73,7 +74,8 @@ module Jekyll
 
         level_html = '<ul>' + level_html + '</ul>' if level_html.length > 0
 
-        anchor_id = anchor_prefix + toc_level.to_s + '-' + toc_section.to_s
+        # anchor_id = anchor_prefix + toc_level.to_s + '-' + toc_section.to_s
+        anchor_id = tag['id']
         tag['id'] = "#{anchor_id}"
 
         toc_html += create_level_html(anchor_id,
